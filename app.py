@@ -114,7 +114,13 @@ html, body {
 /* Make header transparent and non-blocking */
 [data-testid="stHeader"] {
     background: transparent !important;
-    z-index: 999 !important;
+    pointer-events: none !important;
+    z-index: 9999 !important;
+}
+/* Re-enable pointer events for buttons inside header */
+[data-testid="stHeader"] button,
+[data-testid="stHeader"] [data-testid="stSidebarCollapsedControl"] {
+    pointer-events: auto !important;
 }
 
 /* ── Sidebar ── */
@@ -127,7 +133,7 @@ html, body {
 [data-testid="stSidebar"] .stRadio [aria-checked="true"] + div { color: #ffffff !important; }
 [data-testid="stSidebar"] hr { border-color: rgba(255,255,255,0.12) !important; }
 
-/* ── Sidebar Collapse Button (tombol tutup sidebar) ── */
+/* ── Sidebar Collapse Button (tombol tutup sidebar di dalam sidebar) ── */
 [data-testid="stSidebarCollapseButton"] {
     display: flex !important;
     visibility: visible !important;
@@ -135,8 +141,9 @@ html, body {
 }
 [data-testid="stSidebarCollapseButton"] button {
     color: #ffffff !important;
-    background: rgba(255,255,255,0.08) !important;
+    background: rgba(255,255,255,0.12) !important;
     border-radius: 6px !important;
+    border: none !important;
 }
 [data-testid="stSidebarCollapseButton"] svg {
     fill: #ffffff !important;
@@ -144,33 +151,50 @@ html, body {
     color: #ffffff !important;
 }
 
-/* ── Sidebar Expand/Reopen Button (tombol buka sidebar) ── */
+/* ── Sidebar Expand Button (tombol buka sidebar di pojok kiri atas saat tertutup) ── */
 [data-testid="stSidebarCollapsedControl"],
-[data-testid="collapsedControl"],
-button[aria-label="Open sidebar"],
-button[aria-label="Expand sidebar"] {
-    display: flex !important;
+[data-testid="collapsedControl"] {
+    position: fixed !important;
+    top: 14px !important;
+    left: 14px !important;
+    z-index: 999999 !important;
+    display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-    z-index: 99999 !important;
 }
 [data-testid="stSidebarCollapsedControl"] button,
 [data-testid="collapsedControl"] button,
+header button[aria-label*="sidebar" i],
 button[aria-label="Open sidebar"],
 button[aria-label="Expand sidebar"] {
     background: #1a4731 !important;
     color: #ffffff !important;
+    border: 1px solid #40916c !important;
     border-radius: 8px !important;
-    border: none !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+    width: 2.4rem !important;
+    height: 2.4rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25) !important;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+}
+[data-testid="stSidebarCollapsedControl"] button:hover,
+[data-testid="collapsedControl"] button:hover,
+header button[aria-label*="sidebar" i]:hover {
+    background: #2d6a4f !important;
 }
 [data-testid="stSidebarCollapsedControl"] svg,
 [data-testid="collapsedControl"] svg,
+header button[aria-label*="sidebar" i] svg,
 button[aria-label="Open sidebar"] svg,
 button[aria-label="Expand sidebar"] svg {
     fill: #ffffff !important;
     stroke: #ffffff !important;
     color: #ffffff !important;
+    width: 1.2rem !important;
+    height: 1.2rem !important;
 }
 
 /* ── Main Content Padding ── */
@@ -580,7 +604,8 @@ button[aria-label="Expand sidebar"] svg {
     color: #4a5e4e !important;
 }
 /* Browse files / Upload button inside dropzone */
-[data-testid="stFileUploaderDropzone"] button {
+[data-testid="stFileUploaderDropzoneInstructions"] button,
+[data-testid="stFileUploaderDropzone"] > div > button {
     background: #1a4731 !important;
     color: #ffffff !important;
     border: none !important;
@@ -590,18 +615,14 @@ button[aria-label="Expand sidebar"] svg {
     box-shadow: none !important;
     transform: none !important;
 }
-[data-testid="stFileUploaderDropzone"] button:hover {
+[data-testid="stFileUploaderDropzoneInstructions"] button:hover,
+[data-testid="stFileUploaderDropzone"] > div > button:hover {
     background: #2d6a4f !important;
     transform: none !important;
 }
-/* Make SURE browse button text and icon are crisp white */
-[data-testid="stFileUploaderDropzone"] button,
-[data-testid="stFileUploaderDropzone"] button *,
-[data-testid="stFileUploaderDropzone"] button svg,
-[data-testid="stFileUploaderDropzone"] button svg path {
+[data-testid="stFileUploaderDropzoneInstructions"] button *,
+[data-testid="stFileUploaderDropzone"] > div > button * {
     color: #ffffff !important;
-    fill: #ffffff !important;
-    stroke: #ffffff !important;
 }
 
 /* Uploaded file row container */
@@ -618,20 +639,18 @@ button[aria-label="Expand sidebar"] svg {
     color: #1c2b1e !important;
 }
 
-/* All action buttons inside uploader (including + button) */
-[data-testid="stFileUploader"] button {
+/* Action button (+ add more file) */
+[data-testid="stFileUploaderFile"] button:not([data-testid="stFileUploaderDeleteBtn"] button) {
     background: #1a4731 !important;
     color: #ffffff !important;
     border: 1px solid #2d6a4f !important;
     border-radius: 6px !important;
 }
-[data-testid="stFileUploader"] button:hover {
+[data-testid="stFileUploaderFile"] button:not([data-testid="stFileUploaderDeleteBtn"] button):hover {
     background: #2d6a4f !important;
-    border-color: #40916c !important;
 }
-[data-testid="stFileUploader"] button svg {
+[data-testid="stFileUploaderFile"] button:not([data-testid="stFileUploaderDeleteBtn"] button) * {
     color: #ffffff !important;
-    stroke: #ffffff !important;
 }
 
 /* Khusus tombol Delete (X) — style merah lembut dengan icon silang presisi */
@@ -650,17 +669,15 @@ button[aria-label*="Remove" i]:hover {
     border-color: #b03a2e !important;
     color: #ffffff !important;
 }
-[data-testid="stFileUploaderDeleteBtn"] button svg,
+[data-testid="stFileUploaderDeleteBtn"] svg,
+[data-testid="stFileUploaderDeleteBtn"] svg path,
 button[aria-label*="Delete" i] svg,
-button[aria-label*="Remove" i] svg {
-    color: #b03a2e !important;
-    stroke: #b03a2e !important;
-}
-[data-testid="stFileUploaderDeleteBtn"] button:hover svg,
-button[aria-label*="Delete" i]:hover svg,
-button[aria-label*="Remove" i]:hover svg {
-    color: #ffffff !important;
-    stroke: #ffffff !important;
+button[aria-label*="Delete" i] svg path,
+button[aria-label*="Remove" i] svg,
+button[aria-label*="Remove" i] svg path {
+    fill: none !important;
+    stroke: currentColor !important;
+    color: inherit !important;
 }
 
 /* ── Expander ── */
