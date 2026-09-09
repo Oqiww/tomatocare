@@ -46,8 +46,6 @@ Aplikasi Streamlit untuk deteksi penyakit daun tomat menggunakan model ConvNeXt 
 | 8 | Tomato___Tomato_mosaic_virus | Tomato Mosaic Virus |
 | 9 | Tomato___healthy | Healthy |
 
-> Urutan kelas mengikuti `sorted(os.listdir(dataset_dir))` — alphabetical ascending.
-
 ---
 
 ## Struktur Proyek
