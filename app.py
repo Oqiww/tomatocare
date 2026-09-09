@@ -31,7 +31,7 @@ st.set_page_config(
     page_title="TomatoCare — Deteksi Penyakit Daun Tomat",
     page_icon="🍅",
     layout="wide",
-    initial_sidebar_state="auto",
+    initial_sidebar_state="collapsed",
     menu_items={
         "About": "TomatoCare v1.0 — AI-assisted tomato leaf disease detection. For educational purposes."
     },
@@ -107,104 +107,146 @@ html, body {
     background: rgba(238,244,239,0.55);
 }
 
-/* ── Hide Streamlit Chrome (only branding, keep sidebar controls) ── */
+/* ── Hide Streamlit Chrome & Sidebar ── */
 #MainMenu, footer { display: none !important; }
 [data-testid="stToolbar"] { display: none !important; }
+[data-testid="stHeader"] { display: none !important; }
 
-/* Make header transparent and non-blocking */
-[data-testid="stHeader"] {
-    background: transparent !important;
-    pointer-events: none !important;
-    z-index: 9999 !important;
-}
-/* Re-enable pointer events for buttons inside header */
-[data-testid="stHeader"] button,
-[data-testid="stHeader"] [data-testid="stSidebarCollapsedControl"] {
-    pointer-events: auto !important;
-}
-
-/* ── Sidebar ── */
-[data-testid="stSidebar"] {
-    background: #1a2e22 !important;
-    border-right: 1px solid rgba(255,255,255,0.08);
-}
-[data-testid="stSidebar"] * { color: rgba(255,255,255,0.9) !important; }
-[data-testid="stSidebar"] .stRadio label { color: rgba(255,255,255,0.75) !important; }
-[data-testid="stSidebar"] .stRadio [aria-checked="true"] + div { color: #ffffff !important; }
-[data-testid="stSidebar"] hr { border-color: rgba(255,255,255,0.12) !important; }
-
-/* ── Sidebar Collapse Button (tombol tutup sidebar di dalam sidebar) ── */
-[data-testid="stSidebarCollapseButton"] {
-    display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-}
-[data-testid="stSidebarCollapseButton"] button {
-    color: #ffffff !important;
-    background: rgba(255,255,255,0.12) !important;
-    border-radius: 6px !important;
-    border: none !important;
-}
-[data-testid="stSidebarCollapseButton"] svg {
-    fill: #ffffff !important;
-    stroke: #ffffff !important;
-    color: #ffffff !important;
-}
-
-/* ── Sidebar Expand Button (tombol buka sidebar di pojok kiri atas saat tertutup) ── */
+/* Sembunyikan sidebar dan kontrolnya sepenuhnya */
+[data-testid="stSidebar"],
 [data-testid="stSidebarCollapsedControl"],
-[data-testid="collapsedControl"] {
-    position: fixed !important;
-    top: 14px !important;
-    left: 14px !important;
-    z-index: 999999 !important;
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-}
-[data-testid="stSidebarCollapsedControl"] button,
-[data-testid="collapsedControl"] button,
-header button[aria-label*="sidebar" i],
-button[aria-label="Open sidebar"],
-button[aria-label="Expand sidebar"] {
-    background: #1a4731 !important;
-    color: #ffffff !important;
-    border: 1px solid #40916c !important;
-    border-radius: 8px !important;
-    width: 2.4rem !important;
-    height: 2.4rem !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.25) !important;
-    cursor: pointer !important;
-    pointer-events: auto !important;
-}
-[data-testid="stSidebarCollapsedControl"] button:hover,
-[data-testid="collapsedControl"] button:hover,
-header button[aria-label*="sidebar" i]:hover {
-    background: #2d6a4f !important;
-}
-[data-testid="stSidebarCollapsedControl"] svg,
-[data-testid="collapsedControl"] svg,
-header button[aria-label*="sidebar" i] svg,
-button[aria-label="Open sidebar"] svg,
-button[aria-label="Expand sidebar"] svg {
-    fill: #ffffff !important;
-    stroke: #ffffff !important;
-    color: #ffffff !important;
-    width: 1.2rem !important;
-    height: 1.2rem !important;
+[data-testid="collapsedControl"],
+button[aria-label*="sidebar" i],
+[data-testid="stSidebarCollapseButton"] {
+    display: none !important;
 }
 
-/* ── Main Content Padding ── */
+/* ── Modern Top Navigation Tabs ── */
+.stTabs {
+    margin-bottom: 2rem;
+}
+.stTabs [data-baseweb="tab-list"] {
+    gap: 10px;
+    background: #ffffff;
+    padding: 8px;
+    border-radius: 14px;
+    border: 1px solid #d8e8dc;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+    display: flex;
+    justify-content: center;
+}
+.stTabs [data-baseweb="tab"] {
+    height: auto;
+    padding: 0.65rem 1.6rem !important;
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+    font-size: 0.95rem !important;
+    color: #4a5e4e !important;
+    background: transparent !important;
+    border: none !important;
+    transition: all 0.2s ease !important;
+}
+.stTabs [data-baseweb="tab"]:hover {
+    color: #1a4731 !important;
+    background: #f0f7f2 !important;
+}
+.stTabs [aria-selected="true"] {
+    background: linear-gradient(135deg, #1a4731 0%, #2d6a4f 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(26,71,49,0.22) !important;
+}
+.stTabs [data-baseweb="tab-highlight"] {
+    display: none !important;
+}
+.stTabs [data-baseweb="tab-border"] {
+    display: none !important;
+}
+
+/* ── Main Content Container ── */
 [data-testid="stMainBlockContainer"] {
-    padding: 2rem 3rem;
-    max-width: 1200px;
+    padding: 2.5rem 2rem 4rem !important;
+    max-width: 1100px !important;
     margin: 0 auto;
 }
+
+/* ── Responsive Rules (HP & iPad) ── */
 @media (max-width: 768px) {
-    [data-testid="stMainBlockContainer"] { padding: 1rem 1.2rem; }
+    /* Khusus Smartphone / HP */
+    [data-testid="stMainBlockContainer"] {
+        padding: 1rem 0.75rem 3rem !important;
+    }
+    .hero-section {
+        padding: 1.75rem 1.25rem !important;
+        border-radius: 16px !important;
+        margin-bottom: 1.25rem !important;
+    }
+    .hero-title {
+        font-size: 1.9rem !important;
+    }
+    .hero-tagline {
+        font-size: 0.9rem !important;
+    }
+    .hero-description {
+        font-size: 0.85rem !important;
+        line-height: 1.55 !important;
+    }
+    
+    /* Tabs di HP bisa scroll horizontal mulus */
+    .stTabs [data-baseweb="tab-list"] {
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding: 6px;
+        gap: 6px;
+        -webkit-overflow-scrolling: touch;
+    }
+    .stTabs [data-baseweb="tab"] {
+        padding: 0.5rem 0.9rem !important;
+        font-size: 0.85rem !important;
+        white-space: nowrap !important;
+        flex-shrink: 0;
+    }
+    
+    /* Step card di HP */
+    .step-card {
+        padding: 1rem 0.75rem !important;
+        margin-bottom: 0.75rem;
+    }
+    .step-number {
+        width: 2.2rem !important;
+        height: 2.2rem !important;
+        font-size: 0.9rem !important;
+    }
+    .step-title {
+        font-size: 0.9rem !important;
+    }
+    .step-desc {
+        font-size: 0.8rem !important;
+    }
+    
+    /* Result card di HP */
+    .result-disease-name {
+        font-size: 1.5rem !important;
+    }
+    .result-confidence-num {
+        font-size: 2rem !important;
+    }
+    .card, .card-elevated, .disease-info-card {
+        padding: 1.25rem 1rem !important;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    /* Khusus iPad / Tablet */
+    [data-testid="stMainBlockContainer"] {
+        padding: 2rem 1.5rem 3.5rem !important;
+        max-width: 100% !important;
+    }
+    .hero-section {
+        padding: 2.2rem 2rem !important;
+    }
+    .hero-title {
+        font-size: 2.4rem !important;
+    }
 }
 
 /* ── Spinner text ── */
@@ -687,8 +729,86 @@ button[aria-label*="Remove" i] svg path {
     background: var(--bg-card) !important;
 }
 
-/* ── Radio ── */
-.stRadio > div { gap: 0.5rem; }
+/* ── Top Navigation Segmented Bar (Horizontal Radio) ── */
+[data-testid="stRadio"] {
+    margin-bottom: 2rem !important;
+}
+[data-testid="stRadio"] > div[role="radiogroup"] {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    background: #ffffff !important;
+    padding: 6px !important;
+    border-radius: 99px !important;
+    border: 1px solid #d8e8dc !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06) !important;
+    gap: 8px !important;
+    max-width: 600px !important;
+    margin: 0 auto !important;
+}
+/* Radio option labels */
+[data-testid="stRadio"] label {
+    background: transparent !important;
+    border-radius: 99px !important;
+    padding: 0.6rem 1.4rem !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    margin: 0 !important;
+    border: none !important;
+    display: flex !important;
+    align-items: center !important;
+}
+/* Hide the default radio circle */
+[data-testid="stRadio"] label > div:first-child {
+    display: none !important;
+}
+/* Text inside radio label */
+[data-testid="stRadio"] label p,
+[data-testid="stRadio"] label div {
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    color: #4a5e4e !important;
+    margin: 0 !important;
+}
+/* Hover effect */
+[data-testid="stRadio"] label:hover {
+    background: #f0f7f2 !important;
+}
+/* Active / Selected Pill */
+[data-testid="stRadio"] label:has(input:checked),
+[data-testid="stRadio"] label[data-checked="true"] {
+    background: linear-gradient(135deg, #1a4731 0%, #2d6a4f 100%) !important;
+    box-shadow: 0 3px 10px rgba(26,71,49,0.25) !important;
+}
+[data-testid="stRadio"] label:has(input:checked) p,
+[data-testid="stRadio"] label:has(input:checked) div,
+[data-testid="stRadio"] label[data-checked="true"] p,
+[data-testid="stRadio"] label[data-checked="true"] div {
+    color: #ffffff !important;
+}
+
+/* Responsiveness for Nav Bar on Mobile */
+@media (max-width: 768px) {
+    [data-testid="stRadio"] > div[role="radiogroup"] {
+        overflow-x: auto !important;
+        justify-content: flex-start !important;
+        border-radius: 14px !important;
+        padding: 5px !important;
+        gap: 5px !important;
+        max-width: 100% !important;
+        -webkit-overflow-scrolling: touch;
+    }
+    [data-testid="stRadio"] label {
+        padding: 0.5rem 0.9rem !important;
+        border-radius: 10px !important;
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
+    }
+    [data-testid="stRadio"] label p,
+    [data-testid="stRadio"] label div {
+        font-size: 0.85rem !important;
+    }
+}
 
 /* ── Footer ── */
 .app-footer {
@@ -721,127 +841,37 @@ button[aria-label*="Remove" i] svg path {
 
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
-# ── Force sidebar open via JS (override browser localStorage state) ──
-components.html("""
-<script>
-(function() {
-    function openSidebar() {
-        var doc = window.parent.document;
-        // Try by aria-expanded attribute
-        var sidebar = doc.querySelector('[data-testid="stSidebar"]');
-        if (sidebar) {
-            var isCollapsed = sidebar.getAttribute('aria-expanded') === 'false'
-                           || sidebar.style.transform
-                           || getComputedStyle(sidebar).transform !== 'none';
-        }
-        // Click the collapse button if sidebar appears closed
-        var collapseBtn = doc.querySelector('[data-testid="stSidebarCollapseButton"]');
-        var openBtn = doc.querySelector('[data-testid="collapsedControl"]')
-                   || doc.querySelector('button[aria-label="Open sidebar"]');
-        if (openBtn) {
-            openBtn.click();
-        }
-    }
-    // Try at multiple intervals for reliability
-    setTimeout(openSidebar, 50);
-    setTimeout(openSidebar, 200);
-    setTimeout(openSidebar, 600);
-})();
-</script>
-""", height=0, scrolling=False)
-
-
-# ──────────────────────────────────────────────────────────
-# Session State Initialization
-# ──────────────────────────────────────────────────────────
-if "analysis_history" not in st.session_state:
-    st.session_state.analysis_history = []
-if "current_prediction" not in st.session_state:
-    st.session_state.current_prediction = None
-if "analyzed" not in st.session_state:
-    st.session_state.analyzed = False
-if "uploader_key" not in st.session_state:
-    st.session_state.uploader_key = 0
-
-
-# ──────────────────────────────────────────────────────────
-# Sidebar
-# ──────────────────────────────────────────────────────────
-with st.sidebar:
-    st.markdown(
-        """
-        <div style="padding:1.5rem 0 1rem;">
-            <div style="font-size:1.8rem;font-weight:800;color:#fff;line-height:1;">
-                🍅 TomatoCare
-            </div>
-            <div style="font-size:0.82rem;color:rgba(255,255,255,0.55);margin-top:0.3rem;font-weight:400;">
-                AI Disease Detection
-            </div>
+# ── Top Hero Banner ──
+st.markdown(
+    """
+    <div class="hero-section">
+        <div class="hero-title">🍅 TomatoCare</div>
+        <div class="hero-tagline">AI-Powered Tomato Leaf Disease Detection</div>
+        <div class="hero-description">
+            Upload gambar daun tomat yang jelas dan biarkan model AI
+            mengidentifikasi kondisi kesehatan daun secara otomatis.
+            Dapatkan prediksi, confidence score, dan rekomendasi tindakan
+            dalam hitungan detik.
         </div>
-        """,
-        unsafe_allow_html=True,
-    )
-    st.markdown("---")
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
 
-    page = st.radio(
-        "Navigasi",
-        options=["Deteksi Penyakit", "Panduan Penyakit", "Tentang Model"],
-        index=0,
-        label_visibility="visible",
-    )
-
-    st.markdown("---")
-
-    # Session History (preview)
-    if st.session_state.analysis_history:
-        st.markdown(
-            "<div style='font-size:0.8rem;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.6rem;'>Riwayat Sesi</div>",
-            unsafe_allow_html=True,
-        )
-        for item in reversed(st.session_state.analysis_history[-5:]):
-            conf_color = "#52b788" if item["confidence"] >= 0.75 else ("#e67e22" if item["confidence"] >= 0.50 else "#e74c3c")
-            st.markdown(
-                f"""
-                <div style="padding:0.4rem 0;border-bottom:1px solid rgba(255,255,255,0.08);">
-                    <div style="font-size:0.85rem;font-weight:600;color:rgba(255,255,255,0.9);">
-                        {item['display_name']}
-                    </div>
-                    <div style="font-size:0.75rem;color:{conf_color};">
-                        {item['confidence']*100:.1f}%
-                    </div>
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
-
-    st.markdown("---")
-    st.markdown(
-        "<div style='font-size:0.78rem;color:rgba(255,255,255,0.35);line-height:1.5;'>Model: ConvNeXtTiny<br>Keras 3 · TensorFlow<br>10 Kelas Penyakit</div>",
-        unsafe_allow_html=True,
-    )
+# ── Top Navigation Segmented Bar ──
+page = st.radio(
+    "Navigasi",
+    options=["Deteksi Penyakit", "Panduan Penyakit", "Tentang Model"],
+    index=0,
+    horizontal=True,
+    label_visibility="collapsed",
+)
 
 
 # ──────────────────────────────────────────────────────────
 # PAGE 1: DETEKSI PENYAKIT
 # ──────────────────────────────────────────────────────────
 if page == "Deteksi Penyakit":
-
-    # ── Hero ──
-    st.markdown(
-        """
-        <div class="hero-section">
-            <div class="hero-title">🍅 TomatoCare</div>
-            <div class="hero-tagline">AI-Powered Tomato Leaf Disease Detection</div>
-            <div class="hero-description">
-                Upload gambar daun tomat yang jelas dan biarkan model AI
-                mengidentifikasi kondisi kesehatan daun secara otomatis.
-                Dapatkan prediksi, confidence score, dan rekomendasi tindakan
-                dalam hitungan detik.
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
 
     # ── Load Model ──
     with st.spinner("Memuat model AI... Mohon tunggu sebentar."):
@@ -1235,6 +1265,39 @@ TomatoCare v1.0 — AI-Powered Tomato Leaf Disease Detection
                         st.session_state.current_prediction = None
                         st.session_state.uploader_key += 1
                         st.rerun()
+
+    # ── Session History Section ──
+    if st.session_state.analysis_history:
+        st.markdown("<br><hr style='border:none;border-top:1px solid #d8e8dc;margin:2rem 0 1.5rem;'>", unsafe_allow_html=True)
+        st.markdown('<div class="section-title">📋 Riwayat Analisis Sesi Ini</div>', unsafe_allow_html=True)
+        st.markdown(
+            '<div style="font-size:0.88rem;color:#7a8f7e;margin-bottom:1rem;">'
+            'Daftar daun yang telah dianalisis pada sesi penggunaan ini:'
+            '</div>',
+            unsafe_allow_html=True,
+        )
+        recent_history = list(reversed(st.session_state.analysis_history[-6:]))
+        num_cols = min(len(recent_history), 3)
+        hist_cols = st.columns(num_cols)
+        for idx, item in enumerate(recent_history):
+            conf_val = item["confidence"]
+            conf_color = "#2d6a4f" if conf_val >= 0.75 else ("#e67e22" if conf_val >= 0.50 else "#c0392b")
+            with hist_cols[idx % num_cols]:
+                st.markdown(
+                    f"""
+                    <div class="card" style="padding:1rem;margin-bottom:1rem;border-left:4px solid {conf_color};">
+                        <div style="font-size:0.75rem;color:#7a8f7e;margin-bottom:0.25rem;">{item.get('time', 'Sesi saat ini')}</div>
+                        <div style="font-size:0.95rem;font-weight:700;color:#1c2b1e;margin-bottom:0.4rem;">{item['display_name']}</div>
+                        <div style="display:flex;align-items:center;justify-content:space-between;">
+                            <span style="font-size:0.78rem;font-weight:600;color:#4a5e4e;">Confidence:</span>
+                            <span style="font-size:0.85rem;font-weight:800;color:{conf_color};background:{conf_color}18;padding:0.15rem 0.6rem;border-radius:99px;">
+                                {conf_val*100:.1f}%
+                            </span>
+                        </div>
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )
 
 
 # ──────────────────────────────────────────────────────────
