@@ -31,7 +31,7 @@ st.set_page_config(
     page_title="TomatoCare — Deteksi Penyakit Daun Tomat",
     page_icon="🍅",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="collapsed",
     menu_items={
         "About": "TomatoCare v1.0 — AI-assisted tomato leaf disease detection. For educational purposes."
     },
@@ -107,41 +107,6 @@ html, body {
     background: rgba(238,244,239,0.55);
 }
 
-/* ── Fix File Uploader text visibility ── */
-[data-testid="stFileUploaderDropzone"] {
-    background: var(--bg-card) !important;
-    border-radius: var(--radius-md) !important;
-}
-[data-testid="stFileUploaderDropzone"] * {
-    color: var(--text-primary) !important;
-}
-[data-testid="stFileUploaderDropzoneInstructions"] div,
-[data-testid="stFileUploaderDropzoneInstructions"] span,
-[data-testid="stFileUploaderDropzoneInstructions"] small {
-    color: var(--text-secondary) !important;
-}
-/* Uploaded file row */
-[data-testid="stFileUploaderFile"] {
-    background: var(--bg-main) !important;
-    border-radius: var(--radius-sm) !important;
-    border: 1px solid var(--border) !important;
-}
-[data-testid="stFileUploaderFile"] * {
-    color: var(--text-primary) !important;
-}
-/* Delete (X) button in uploader */
-[data-testid="stFileUploaderDeleteBtn"] button {
-    background: transparent !important;
-    color: var(--text-muted) !important;
-    border: none !important;
-    box-shadow: none !important;
-    transform: none !important;
-}
-[data-testid="stFileUploaderDeleteBtn"] button:hover {
-    color: var(--danger) !important;
-    transform: none !important;
-}
-
 /* ── Hide Streamlit Chrome (only branding, keep sidebar controls) ── */
 #MainMenu, footer { display: none !important; }
 /* Hide Streamlit toolbar but keep sidebar toggle intact */
@@ -167,10 +132,17 @@ html, body {
 [data-testid="stSidebar"] .stRadio [aria-checked="true"] + div { color: #ffffff !important; }
 [data-testid="stSidebar"] hr { border-color: rgba(255,255,255,0.12) !important; }
 
-/* ── Hide sidebar COLLAPSE button (so sidebar can't be closed accidentally) ── */
-[data-testid="stSidebarCollapseButton"],
-[data-testid="stSidebarCollapseButton"] * {
-    display: none !important;
+/* ── Sidebar Collapse Button (tombol tutup sidebar) ── */
+[data-testid="stSidebarCollapseButton"] {
+    display: flex !important;
+}
+[data-testid="stSidebarCollapseButton"] button {
+    color: #ffffff !important;
+}
+[data-testid="stSidebarCollapseButton"] svg {
+    fill: #ffffff !important;
+    stroke: #ffffff !important;
+    color: #ffffff !important;
 }
 
 /* ── Reopen button styling (fallback if sidebar already collapsed) ── */
@@ -596,25 +568,19 @@ button[aria-label="Open sidebar"] svg {
 [data-testid="stFileUploaderDropzone"]:hover {
     border-color: #40916c !important;
 }
-/* All text inside dropzone */
-[data-testid="stFileUploaderDropzone"],
-[data-testid="stFileUploaderDropzone"] *,
-[data-testid="stFileUploaderDropzoneInstructions"],
-[data-testid="stFileUploaderDropzoneInstructions"] * {
-    color: #1c2b1e !important;
-}
-/* Instructions secondary text */
-[data-testid="stFileUploaderDropzoneInstructions"] small,
-[data-testid="stFileUploaderDropzoneInstructions"] span {
+/* Instructions text */
+[data-testid="stFileUploaderDropzoneInstructions"] div,
+[data-testid="stFileUploaderDropzoneInstructions"] span,
+[data-testid="stFileUploaderDropzoneInstructions"] small {
     color: #4a5e4e !important;
 }
-/* Browse files button inside uploader */
+/* Browse files / Upload button inside dropzone */
 [data-testid="stFileUploaderDropzone"] button {
     background: #1a4731 !important;
     color: #ffffff !important;
     border: none !important;
     border-radius: 6px !important;
-    padding: 0.4rem 1rem !important;
+    padding: 0.45rem 1.2rem !important;
     font-weight: 600 !important;
     box-shadow: none !important;
     transform: none !important;
@@ -623,29 +589,55 @@ button[aria-label="Open sidebar"] svg {
     background: #2d6a4f !important;
     transform: none !important;
 }
-/* Uploaded file name row */
+/* Make SURE browse button text and icon are crisp white */
+[data-testid="stFileUploaderDropzone"] button,
+[data-testid="stFileUploaderDropzone"] button *,
+[data-testid="stFileUploaderDropzone"] button svg,
+[data-testid="stFileUploaderDropzone"] button svg path {
+    color: #ffffff !important;
+    fill: #ffffff !important;
+    stroke: #ffffff !important;
+}
+
+/* Uploaded file row container */
 [data-testid="stFileUploaderFile"] {
     background: #f0f7f2 !important;
     border: 1px solid #d8e8dc !important;
     border-radius: 8px !important;
     margin-top: 0.5rem !important;
 }
-[data-testid="stFileUploaderFile"] * {
+/* File name and file size text */
+[data-testid="stFileUploaderFile"] span,
+[data-testid="stFileUploaderFile"] small,
+[data-testid="stFileUploaderFile"] div {
     color: #1c2b1e !important;
 }
-/* Delete X button */
-[data-testid="stFileUploaderDeleteBtn"] > button {
-    background: transparent !important;
-    color: #7a8f7e !important;
-    border: none !important;
-    box-shadow: none !important;
-    transform: none !important;
-    padding: 0.2rem !important;
+
+/* All action buttons inside uploader (including + button and x button) */
+[data-testid="stFileUploader"] button {
+    background: #1a4731 !important;
+    color: #ffffff !important;
+    border: 1px solid #2d6a4f !important;
+    border-radius: 6px !important;
 }
-[data-testid="stFileUploaderDeleteBtn"] > button:hover {
-    color: #b03a2e !important;
-    background: rgba(176,58,46,0.08) !important;
-    transform: none !important;
+[data-testid="stFileUploader"] button:hover {
+    background: #2d6a4f !important;
+    border-color: #40916c !important;
+}
+/* Ensure + and x icons/paths are pure white */
+[data-testid="stFileUploader"] button *,
+[data-testid="stFileUploader"] button svg,
+[data-testid="stFileUploader"] button svg path {
+    color: #ffffff !important;
+    fill: #ffffff !important;
+    stroke: #ffffff !important;
+}
+/* Delete button hover danger effect */
+[data-testid="stFileUploaderDeleteBtn"] button:hover,
+button[aria-label*="Delete"]:hover,
+button[aria-label*="Remove"]:hover {
+    background: #b03a2e !important;
+    border-color: #b03a2e !important;
 }
 
 /* ── Expander ── */
