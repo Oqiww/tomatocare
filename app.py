@@ -31,7 +31,7 @@ st.set_page_config(
     page_title="TomatoCare — Deteksi Penyakit Daun Tomat",
     page_icon="🍅",
     layout="wide",
-    initial_sidebar_state="collapsed",
+    initial_sidebar_state="auto",
     menu_items={
         "About": "TomatoCare v1.0 — AI-assisted tomato leaf disease detection. For educational purposes."
     },
@@ -109,17 +109,12 @@ html, body {
 
 /* ── Hide Streamlit Chrome (only branding, keep sidebar controls) ── */
 #MainMenu, footer { display: none !important; }
-/* Hide Streamlit toolbar but keep sidebar toggle intact */
 [data-testid="stToolbar"] { display: none !important; }
-/* Make header transparent so sidebar control still works */
+
+/* Make header transparent and non-blocking */
 [data-testid="stHeader"] {
     background: transparent !important;
-    height: 2rem !important;
-}
-/* Only hide Streamlit branding inside header */
-[data-testid="stHeader"] > div:first-child {
-    opacity: 0 !important;
-    pointer-events: none !important;
+    z-index: 999 !important;
 }
 
 /* ── Sidebar ── */
@@ -135,9 +130,13 @@ html, body {
 /* ── Sidebar Collapse Button (tombol tutup sidebar) ── */
 [data-testid="stSidebarCollapseButton"] {
     display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 [data-testid="stSidebarCollapseButton"] button {
     color: #ffffff !important;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 6px !important;
 }
 [data-testid="stSidebarCollapseButton"] svg {
     fill: #ffffff !important;
@@ -145,27 +144,33 @@ html, body {
     color: #ffffff !important;
 }
 
-/* ── Reopen button styling (fallback if sidebar already collapsed) ── */
+/* ── Sidebar Expand/Reopen Button (tombol buka sidebar) ── */
+[data-testid="stSidebarCollapsedControl"],
 [data-testid="collapsedControl"],
-button[aria-label="Open sidebar"] {
-    background: #1a4731 !important;
-    border-radius: 0 8px 8px 0 !important;
-    border: none !important;
-    box-shadow: 2px 0 8px rgba(0,0,0,0.3) !important;
-    width: 1.8rem !important;
-    height: 2.5rem !important;
-    top: 4rem !important;
-    opacity: 1 !important;
-    visibility: visible !important;
+button[aria-label="Open sidebar"],
+button[aria-label="Expand sidebar"] {
     display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-}
-[data-testid="collapsedControl"] svg,
-button[aria-label="Open sidebar"] svg {
-    fill: #ffffff !important;
-    color: #ffffff !important;
+    visibility: visible !important;
     opacity: 1 !important;
+    z-index: 99999 !important;
+}
+[data-testid="stSidebarCollapsedControl"] button,
+[data-testid="collapsedControl"] button,
+button[aria-label="Open sidebar"],
+button[aria-label="Expand sidebar"] {
+    background: #1a4731 !important;
+    color: #ffffff !important;
+    border-radius: 8px !important;
+    border: none !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+}
+[data-testid="stSidebarCollapsedControl"] svg,
+[data-testid="collapsedControl"] svg,
+button[aria-label="Open sidebar"] svg,
+button[aria-label="Expand sidebar"] svg {
+    fill: #ffffff !important;
+    stroke: #ffffff !important;
+    color: #ffffff !important;
 }
 
 /* ── Main Content Padding ── */
@@ -613,7 +618,7 @@ button[aria-label="Open sidebar"] svg {
     color: #1c2b1e !important;
 }
 
-/* All action buttons inside uploader (including + button and x button) */
+/* All action buttons inside uploader (including + button) */
 [data-testid="stFileUploader"] button {
     background: #1a4731 !important;
     color: #ffffff !important;
@@ -624,20 +629,38 @@ button[aria-label="Open sidebar"] svg {
     background: #2d6a4f !important;
     border-color: #40916c !important;
 }
-/* Ensure + and x icons/paths are pure white */
-[data-testid="stFileUploader"] button *,
-[data-testid="stFileUploader"] button svg,
-[data-testid="stFileUploader"] button svg path {
+[data-testid="stFileUploader"] button svg {
     color: #ffffff !important;
-    fill: #ffffff !important;
     stroke: #ffffff !important;
 }
-/* Delete button hover danger effect */
+
+/* Khusus tombol Delete (X) — style merah lembut dengan icon silang presisi */
+[data-testid="stFileUploaderDeleteBtn"] button,
+button[aria-label*="Delete" i],
+button[aria-label*="Remove" i] {
+    background: rgba(176, 58, 46, 0.12) !important;
+    border: 1px solid rgba(176, 58, 46, 0.35) !important;
+    color: #b03a2e !important;
+    border-radius: 6px !important;
+}
 [data-testid="stFileUploaderDeleteBtn"] button:hover,
-button[aria-label*="Delete"]:hover,
-button[aria-label*="Remove"]:hover {
+button[aria-label*="Delete" i]:hover,
+button[aria-label*="Remove" i]:hover {
     background: #b03a2e !important;
     border-color: #b03a2e !important;
+    color: #ffffff !important;
+}
+[data-testid="stFileUploaderDeleteBtn"] button svg,
+button[aria-label*="Delete" i] svg,
+button[aria-label*="Remove" i] svg {
+    color: #b03a2e !important;
+    stroke: #b03a2e !important;
+}
+[data-testid="stFileUploaderDeleteBtn"] button:hover svg,
+button[aria-label*="Delete" i]:hover svg,
+button[aria-label*="Remove" i]:hover svg {
+    color: #ffffff !important;
+    stroke: #ffffff !important;
 }
 
 /* ── Expander ── */
