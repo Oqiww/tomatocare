@@ -147,20 +147,6 @@ predictions = model(img_batch, training=False)     # Softmax output
 streamlit run app.py
 ```
 
-### Streamlit Cloud
-
-1. Push ke GitHub (tanpa `model.weights.h5` jika terlalu besar → gunakan Git LFS atau hosting terpisah)
-2. Deploy di [share.streamlit.io](https://share.streamlit.io)
-3. Set `STREAMLIT_SERVER_MAX_UPLOAD_SIZE=10` jika diperlukan
-
-### Catatan ukuran model
-
-File `model.weights.h5` berukuran ~114 MB. Jika mendeploy ke platform dengan batasan ukuran repo,
-pertimbangkan menggunakan:
-- [Git LFS](https://git-lfs.github.com/)
-- [Hugging Face Hub](https://huggingface.co/)
-- Google Cloud Storage / AWS S3
-
 ---
 
 ## Keterbatasan
