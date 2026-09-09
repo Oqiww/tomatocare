@@ -841,6 +841,18 @@ button[aria-label*="Remove" i] svg path {
 
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
+# ──────────────────────────────────────────────────────────
+# Session State Initialization
+# ──────────────────────────────────────────────────────────
+if "analysis_history" not in st.session_state:
+    st.session_state.analysis_history = []
+if "current_prediction" not in st.session_state:
+    st.session_state.current_prediction = None
+if "analyzed" not in st.session_state:
+    st.session_state.analyzed = False
+if "uploader_key" not in st.session_state:
+    st.session_state.uploader_key = 0
+
 # ── Top Hero Banner ──
 st.markdown(
     """
